@@ -1,0 +1,219 @@
+/* ============================================================
+   SIDEBAR — Production CSS
+   All colors use theme tokens → dark mode works automatically
+   ============================================================ */
+
+/* ── CONTAINER ───────────────────────────────────────────────── */
+.sidebar-container {
+  width: 240px;
+  background: var(--clr-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-right: 1px solid var(--clr-border);
+
+  /* ✅ FIX: was hardcoded #fff */
+  color: var(--clr-text-primary);
+
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s var(--ease-out),
+              background 0.3s ease,
+              border-color 0.3s ease;
+  animation: slideIn 0.6s var(--ease-out) both;
+
+  /* Stay above page blobs */
+  position: relative;
+  z-index: var(--z-raised);
+}
+
+/* ── COLLAPSED ───────────────────────────────────────────────── */
+.sidebar-container.collapsed {
+  width: 120px;
+}
+
+/* ── TOP SECTION ─────────────────────────────────────────────── */
+.sidebar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px; /* 🔥 ensures no overlap */
+}
+
+/* ── LOGO CIRCLE ─────────────────────────────────────────────── */
+.sidebar-logo {
+  min-width: 45px;
+  height: 45px;
+  padding: 0 12px; /* allow text */
+  border-radius: 30px;
+
+  background: var(--gradient-brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: var(--shadow-glow);
+
+  transition: all 0.3s ease;
+}
+
+/* ── TOGGLE BUTTON ───────────────────────────────────────────── */
+.sidebar-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--clr-text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition: color var(--dur-fast) ease,
+              transform var(--dur-fast) ease;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.sidebar-toggle:hover {
+  color: var(--clr-text-primary);
+  transform: scale(1.1);
+}
+
+.sidebar-toggle:active {
+  color: var(--clr-primary-400);
+}
+
+.sidebar-toggle:focus-visible {
+  outline: 2px solid var(--clr-primary-400);
+  outline-offset: 2px;
+}
+
+/* ── ICON ────────────────────────────────────────────────────── */
+.sidebar-icon {
+  font-size: 16px;
+  min-width: 20px;
+  flex-shrink: 0;
+}
+
+/* ── NAV ─────────────────────────────────────────────────────── */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+/* ── LINKS ───────────────────────────────────────────────────── */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--clr-text-secondary);
+  font-size: 15px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  transition: color       var(--dur-fast) ease,
+              background  var(--dur-fast) ease,
+              transform   var(--dur-fast) var(--ease-out);
+}
+
+/* ── ACTIVE ──────────────────────────────────────────────────── */
+.sidebar-link.active {
+  /* ✅ FIX: was hardcoded tomato color — now uses brand */
+  color: var(--clr-primary-400);
+  background: rgba(99, 102, 241, 0.12);
+  font-weight: 600;
+}
+
+/* ── HOVER ───────────────────────────────────────────────────── */
+.sidebar-link:hover:not(.active) {
+  color: var(--clr-text-primary);
+  background: var(--clr-bg-subtle);
+  transform: translateX(4px);
+}
+
+/* ── LOGOUT ──────────────────────────────────────────────────── */
+.sidebar-logout-btn {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-family: var(--font-body);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(239, 68, 68, 0.30);
+  background: rgba(239, 68, 68, 0.15);
+  /* ✅ FIX: was hardcoded #fff */
+  color: #ef4444;
+  cursor: pointer;
+  transition: background var(--dur-fast) ease,
+              transform  var(--dur-fast) ease;
+}
+
+.sidebar-logout-btn:hover {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: rgba(239, 68, 68, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.20);
+  transform: scale(1.03);
+}
+
+.sidebar-logout-btn:focus-visible {
+  outline: 2px solid #ef4444;
+  outline-offset: 2px;
+}
+
+/* ── COLLAPSED: hide text ────────────────────────────────────── */
+.sidebar-container.collapsed .sidebar-link span,
+.sidebar-container.collapsed .sidebar-logout-btn span {
+  display: none;
+}
+
+/* ── COLLAPSED: center icons ─────────────────────────────────── */
+.sidebar-container.collapsed .sidebar-link,
+.sidebar-container.collapsed .sidebar-logout-btn {
+  justify-content: center;
+  padding: 10px;
+}
+
+.sidebar-container.collapsed .sidebar-top {
+  justify-content: space-between;
+}
+
+.sidebar-container.collapsed .sidebar-toggle {
+  display: block;
+  margin: 0 auto;
+}
+
+.sidebar-container.collapsed .sidebar-logo {
+  font-size: 16px;
+  padding: 0;
+  width: 45px;
+  justify-content: center;
+}
+
+/* ── ANIMATION ───────────────────────────────────────────────── */
+@keyframes slideIn {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 70px;
+    padding: 16px 10px;
+  }
+
+  .sidebar-container .sidebar-link span,
+  .sidebar-container .sidebar-logout-btn span {
+    display: none;
+  }
+
+  .sidebar-container .sidebar-link,
+  .sidebar-container .sidebar-logout-btn {
+    justify-content: center;
+  }
+}

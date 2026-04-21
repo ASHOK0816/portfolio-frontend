@@ -1,0 +1,719 @@
+/* ============================================================
+   PROJECT PAGE — Matched to Dashboard.css tokens & patterns
+   Dark-mode ready · Accessible · Mobile first · Performant
+   ============================================================ */
+
+/* ── 1. LAYOUT ──────────────────────────────────────────────── */
+
+.admin-layout {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--clr-bg);
+  font-family: var(--font-body);
+  overflow: hidden;
+}
+
+/* Same floating blobs as dashboard-root */
+.admin-layout::before {
+  content: "";
+  position: fixed;
+  width: min(420px, 50vw);
+  height: min(420px, 50vw);
+  background: var(--blob1-color);
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+  top: 5%;
+  left: 5%;
+  pointer-events: none;
+  animation: floatBlob 9s infinite alternate var(--ease-out);
+  z-index: 0;
+}
+
+.admin-layout::after {
+  content: "";
+  position: fixed;
+  width: min(320px, 40vw);
+  height: min(320px, 40vw);
+  background: var(--blob2-color);
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+  bottom: 5%;
+  right: 5%;
+  pointer-events: none;
+  animation: floatBlob 12s infinite alternate-reverse var(--ease-out);
+  z-index: 0;
+}
+
+@keyframes floatBlob {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, -30px) scale(1.08); }
+}
+
+.admin-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  animation: fadeUp var(--dur-slow) var(--ease-out) both;
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(28px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── 2. PROJECTS CARD (outer wrapper) ───────────────────────── */
+
+.projects-card {
+  background: var(--clr-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--clr-glass-border);
+  box-shadow: 0 4px 24px var(--clr-shadow);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  animation: fadeUp var(--dur-slow) var(--ease-out) 0.1s both;
+}
+
+/* ── 3. HEADER ──────────────────────────────────────────────── */
+
+.projects-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:flex-end;
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+}
+
+/* 👉 Wrap title + subtitle */
+.projects-title-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.projects-title {
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeDown 0.6s var(--ease-out) 0.1s both;
+}
+
+@keyframes fadeDown {
+  from { transform: translateY(-16px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.projects-subtitle {
+  font-size: 13px;
+  color: var(--clr-text-muted);
+  margin-top: 4px;
+}
+
+/* ── 4. GRID ────────────────────────────────────────────────── */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap);
+}
+
+/* ── 5. PROJECT CARD ────────────────────────────────────────── */
+
+.project-card-modern {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+
+  background: var(--clr-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--clr-glass-border);
+  box-shadow: 0 4px 24px var(--clr-shadow);
+
+  display: flex;
+  flex-direction: column;
+
+  opacity: 0;
+  animation: cardFadeUp var(--dur-slow) var(--ease-out) forwards;
+
+  transition:
+    transform  var(--dur-normal) var(--ease-out),
+    box-shadow var(--dur-normal) var(--ease-out),
+    background var(--dur-normal) ease;
+}
+
+/* Staggered entrance — same as dashboard stat cards */
+.project-card-modern:nth-child(1) { animation-delay: 0.10s; }
+.project-card-modern:nth-child(2) { animation-delay: 0.20s; }
+.project-card-modern:nth-child(3) { animation-delay: 0.30s; }
+.project-card-modern:nth-child(4) { animation-delay: 0.40s; }
+.project-card-modern:nth-child(5) { animation-delay: 0.50s; }
+.project-card-modern:nth-child(6) { animation-delay: 0.60s; }
+
+@keyframes cardFadeUp {
+  from { transform: translateY(24px) scale(0.97); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* Shine overlay — same pattern as dashboard-stat-card::before */
+.project-card-modern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.20) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.project-card-modern:hover {
+  transform: translateY(-8px) scale(1.02);
+  background: var(--clr-glass-hover);
+  box-shadow:
+    0 16px 48px var(--clr-shadow-hover),
+    0 0 0 1.5px rgba(255, 255, 255, 0.45);
+}
+
+.project-card-modern:active {
+  transform: translateY(-2px) scale(0.97);
+  transition-duration: 0.1s;
+}
+
+.project-card-modern:focus-visible {
+  outline: 3px solid var(--clr-primary-light);
+  outline-offset: 3px;
+}
+
+/* ── 6. IMAGE ───────────────────────────────────────────────── */
+
+.project-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.image-skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    var(--clr-glass)        25%,
+    var(--clr-glass-border) 50%,
+    var(--clr-glass)        75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.project-image-wrapper:has(.project-image.loaded) .image-skeleton {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(20px);
+  transform: scale(1.08);
+  opacity: 0;
+  transition:
+    filter    0.5s ease,
+    transform 0.5s ease,
+    opacity   0.4s ease;
+}
+
+.project-image.loaded {
+  filter: blur(0);
+  transform: scale(1);
+  opacity: 1;
+}
+
+.project-image-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.35), transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-normal);
+  z-index: 1;
+}
+
+.project-card-modern:hover .project-image-wrapper::after {
+  opacity: 1;
+}
+
+/* ── 7. CONTENT ─────────────────────────────────────────────── */
+
+.project-content {
+  padding: 20px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.heading-card {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  margin-bottom: 10px;
+}
+
+/* ── 8. GITHUB BUTTON ───────────────────────────────────────── */
+
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  margin-bottom: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--clr-glass-border);
+  background: var(--clr-glass);
+  color: var(--clr-text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  width: fit-content;
+  transition:
+    background    var(--dur-fast) ease,
+    border-color  var(--dur-fast) ease,
+    color         var(--dur-fast) ease,
+    box-shadow    var(--dur-fast) ease,
+    transform     var(--dur-fast) var(--ease-out);
+}
+
+.github-btn:hover {
+  background: var(--clr-primary);
+  color: #fff;
+  border-color: var(--clr-primary);
+  box-shadow: 0 4px 14px var(--clr-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.github-btn svg {
+  flex-shrink: 0;
+}
+
+/* ── 9. DESCRIPTION ─────────────────────────────────────────── */
+
+.project-description {
+  font-size: 13px;
+  color: var(--clr-text-secondary);
+  line-height: 1.55;
+  margin-top: 8px;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+/* ── 10. ACTIONS ────────────────────────────────────────────── */
+
+.project-actions-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  gap: 10px;
+  position: relative;
+  z-index: 3;
+}
+
+/* ── 11. BUTTONS ────────────────────────────────────────────── */
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  color: #fff;
+  border: none;
+  position: left;
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform  var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--clr-shadow-hover);
+}
+
+.btn-primary:active {
+  transform: scale(0.96);
+  transition-duration: 0.1s;
+}
+
+.btn-secondary {
+  background: var(--clr-glass);
+  color: var(--clr-text-secondary);
+  border: 1px solid var(--clr-glass-border);
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background   var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    transform    var(--dur-fast) var(--ease-out);
+}
+
+.btn-secondary:hover {
+  background: var(--clr-glass-hover);
+  border-color: var(--clr-primary-light);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #1c1100;
+  border: none;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform  var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) ease;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
+}
+
+.btn-gold:active {
+  transform: scale(0.96);
+  transition-duration: 0.1s;
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.30);
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background   var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    transform    var(--dur-fast) var(--ease-out),
+    box-shadow   var(--dur-fast) ease;
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: rgba(239, 68, 68, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.20);
+}
+
+.btn-danger:active {
+  transform: scale(0.96);
+  transition-duration: 0.1s;
+}
+
+/* ── 12. BADGE ──────────────────────────────────────────────── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--clr-primary-light);
+  border: 1px solid rgba(99, 102, 241, 0.22);
+}
+
+/* ── 13. EMPTY STATE ────────────────────────────────────────── */
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 0;
+  color: var(--clr-text-muted);
+  animation: fadeUp var(--dur-normal) var(--ease-out) both;
+}
+
+.no-project {
+  font-size: 15px;
+}
+
+/* ── 14. PAGINATION ─────────────────────────────────────────── */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: var(--gap);
+  padding-top: 20px;
+  border-top: 1px solid var(--clr-divider);
+}
+
+.page-info {
+  font-size: 13px;
+  color: var(--clr-text-muted);
+  min-width: 100px;
+  text-align: center;
+}
+
+/* ── 15. INPUT ──────────────────────────────────────────────── */
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--clr-glass-border);
+  background: var(--clr-glass);
+  color: var(--clr-text-primary);
+  font-size: 13px;
+  font-family: var(--font-body);
+  margin-bottom: 12px;
+  transition:
+    border-color var(--dur-fast) ease,
+    box-shadow   var(--dur-fast) ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--clr-primary-light);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* ── 16. MODAL ──────────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 440px;
+  max-width: 92%;
+  padding: 28px 24px;
+  border-radius: var(--radius-card);
+  background: var(--clr-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--clr-glass-border);
+  box-shadow:
+    0 16px 48px var(--clr-shadow-hover),
+    0 0 0 1px rgba(255,255,255,0.12);
+  color: var(--clr-text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-edit {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* ── 17. DELETE CONFIRM MODAL ───────────────────────────────── */
+
+.delete-card {
+  background: var(--clr-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--clr-glass-border);
+  padding: 32px 28px;
+  border-radius: var(--radius-card);
+  text-align: center;
+  box-shadow: 0 4px 24px var(--clr-shadow);
+}
+
+.delete-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--clr-text-primary);
+  margin-bottom: 8px;
+}
+
+.delete-card p {
+  font-size: 13px;
+  color: var(--clr-text-secondary);
+}
+
+.delete-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background: var(--clr-glass);
+  border: 1px solid var(--clr-glass-border);
+  color: var(--clr-text-secondary);
+  padding: 8px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--dur-fast) ease;
+}
+
+.cancel-btn:hover {
+  background: var(--clr-glass-hover);
+}
+
+.confirm-delete-btn {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) ease,
+    transform  var(--dur-fast) var(--ease-out);
+}
+
+.confirm-delete-btn:hover {
+  background: #dc2626;
+  transform: scale(1.03);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — mirrors dashboard.css breakpoints exactly
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .admin-content  { padding: 28px 24px; }
+  .projects-grid  { gap: 20px; }
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    padding: 20px 16px;
+    animation-duration: 0.4s;
+  }
+
+  .projects-title {
+    font-size: clamp(16px, 5vw, 22px);
+    letter-spacing: 0.04em;
+  }
+
+  .projects-header {
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .projects-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .project-card-modern {
+    border-radius: 16px;
+  }
+
+  /* Remove hover lift on touch — same as dashboard mobile rule */
+  .project-card-modern:hover {
+    transform: none;
+    box-shadow: 0 4px 24px var(--clr-shadow);
+  }
+
+  .project-card-modern:active {
+    transform: scale(0.97);
+    opacity: 0.92;
+    transition-duration: 0.1s;
+  }
+
+  .modal {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-content  { padding: 14px 10px; }
+  .projects-grid  { gap: 10px; }
+
+  .project-card-modern { border-radius: 14px; }
+
+  .admin-layout::before {
+    width: 200px;
+    height: 200px;
+    filter: blur(60px);
+  }
+
+  .admin-layout::after {
+    width: 160px;
+    height: 160px;
+    filter: blur(50px);
+  }
+}
+
+@media (max-width: 360px) {
+  .projects-grid { grid-template-columns: 1fr; gap: 8px; }
+}

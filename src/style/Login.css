@@ -1,0 +1,508 @@
+/* ─── Design tokens ─── */
+:root {
+  --lf-purple: #7c3aed;
+  --lf-purple-dark: #5b21b6;
+  --lf-purple-light: #a78bfa;
+  --lf-bg: #0a0a0f;
+  --lf-card: #12121a;
+  --lf-card2: #1a1a28;
+  --lf-border: rgba(124, 58, 237, 0.25);
+  --lf-border2: rgba(255, 255, 255, 0.06);
+  --lf-text: #f1f0ff;
+  --lf-muted: #6b6b8a;
+  --lf-err: #f87171;
+  --lf-radius: 12px;
+  --lf-radius-lg: 20px;
+}
+
+/* ─── Page ─── */
+.lf-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--lf-bg);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ─── Ambient orbs ─── */
+.lf-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: lf-float 12s ease-in-out infinite;
+}
+
+.lf-orb--1 {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.22) 0%, transparent 70%);
+  top: -120px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.lf-orb--2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  bottom: -80px;
+  right: -60px;
+  animation-delay: -4s;
+}
+
+.lf-orb--3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.1) 0%, transparent 70%);
+  top: 40%;
+  left: 60%;
+  animation-delay: -8s;
+}
+
+@keyframes lf-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-30px) scale(1.05); }
+}
+
+/* ─── Card ─── */
+.lf-card {
+  width: 380px;
+  max-width: 100%;
+  background: var(--lf-card);
+  border: 0.5px solid var(--lf-border);
+  border-radius: 24px;
+  padding: 2.25rem 2rem 2rem;
+  position: relative;
+  z-index: 1;
+  animation: lf-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.lf-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.lf-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  border-radius: 24px 24px 0 0;
+  background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.4), transparent);
+}
+
+@keyframes lf-slide-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Brand ─── */
+.lf-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.75rem;
+}
+
+.lf-brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--lf-purple), var(--lf-purple-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+.lf-brand-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lf-text);
+  letter-spacing: -0.01em;
+}
+
+.lf-brand-sub {
+  font-size: 11px;
+  color: var(--lf-muted);
+  margin-top: 1px;
+}
+
+/* ─── Heading ─── */
+.lf-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--lf-text);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.lf-subtitle {
+  font-size: 13px;
+  color: var(--lf-muted);
+  margin: 0 0 1.5rem;
+}
+
+/* ─── Fields ─── */
+.lf-field {
+  margin-bottom: 14px;
+}
+
+.lf-input-wrap {
+  position: relative;
+}
+
+.lf-input-icon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--lf-muted);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.lf-input {
+  width: 100%;
+  padding: 12px 40px;
+  background: var(--lf-card2);
+  border: 0.5px solid var(--lf-border2);
+  border-radius: var(--lf-radius);
+  color: var(--lf-text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+
+.lf-input::placeholder { color: transparent; }
+
+.lf-input:focus {
+  border-color: rgba(124, 58, 237, 0.55);
+  background: #1e1e30;
+}
+
+.lf-input:focus ~ .lf-label,
+.lf-input:not(:placeholder-shown) ~ .lf-label {
+  top: 0;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: var(--lf-purple-light);
+  background: var(--lf-card);
+  padding: 0 4px;
+}
+
+.lf-input:focus + .lf-input-icon { color: var(--lf-purple-light); }
+
+.lf-input--error {
+  border-color: rgba(248, 113, 113, 0.5) !important;
+}
+
+.lf-label {
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: var(--lf-muted);
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 4px;
+}
+
+.lf-input-right {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.lf-error {
+  font-size: 11px;
+  color: var(--lf-err);
+  margin: 5px 0 0 2px;
+  animation: lf-fade-in 0.2s ease;
+}
+
+@keyframes lf-fade-in {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mode toggle ── */
+.lf-mode-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: var(--lf-input-bg, rgba(255,255,255,0.05));
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.lf-mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--lf-text-muted, rgba(255,255,255,0.5));
+  transition: all 0.2s ease;
+}
+
+.lf-mode-btn--active {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* ─── Password toggle ─── */
+.lf-pw-toggle {
+  background: none;
+  border: none;
+  color: var(--lf-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.lf-pw-toggle:hover {
+  color: var(--lf-text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Options row ─── */
+.lf-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6px 0 18px;
+}
+
+.lf-remember {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--lf-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.lf-checkbox {
+  width: 16px;
+  height: 16px;
+  border: 0.5px solid rgba(124, 58, 237, 0.4);
+  border-radius: 4px;
+  background: var(--lf-card2);
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.lf-checkbox:checked {
+  background: var(--lf-purple);
+  border-color: var(--lf-purple);
+}
+
+.lf-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(40deg);
+}
+
+.lf-forgot {
+  font-size: 13px;
+  color: rgba(167, 139, 250, 0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.lf-forgot:hover { color: var(--lf-purple-light); }
+
+/* ─── Primary button ─── */
+.lf-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: var(--lf-radius);
+  background: linear-gradient(135deg, var(--lf-purple), var(--lf-purple-dark));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.1s;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
+}
+
+.lf-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.lf-btn:hover::after   { opacity: 1; }
+.lf-btn:hover          { box-shadow: 0 6px 28px rgba(124, 58, 237, 0.5); transform: translateY(-1px); }
+.lf-btn:active         { transform: translateY(1px); box-shadow: 0 2px 12px rgba(124, 58, 237, 0.3); }
+.lf-btn:disabled       { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.lf-btn-arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 15px;
+}
+
+.lf-btn:hover:not(:disabled) .lf-btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ─── Spinner ─── */
+.lf-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: lf-spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes lf-spin { to { transform: rotate(360deg); } }
+
+/* ─── Divider ─── */
+.lf-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+  font-size: 12px;
+  color: var(--lf-muted);
+}
+
+.lf-divider::before,
+.lf-divider::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--lf-border2);
+}
+
+/* ─── Social ─── */
+.lf-social {
+  display: flex;
+  gap: 10px;
+}
+
+.lf-social-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border: 0.5px solid var(--lf-border2);
+  border-radius: var(--lf-radius);
+  background: var(--lf-card2);
+  color: var(--lf-muted);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.1s;
+}
+
+.lf-social-btn:hover {
+  border-color: var(--lf-border);
+  color: var(--lf-text);
+  background: #1e1e30;
+  transform: translateY(-1px);
+}
+
+.lf-social-btn:active { transform: translateY(0); }
+
+/* ─── Footer ─── */
+.lf-foot {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--lf-muted);
+}
+
+.lf-foot-link {
+  color: rgba(167, 139, 250, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.lf-foot-link:hover { color: var(--lf-purple-light); }
+
+/* ─── Shake ─── */
+.lf-card--shake {
+  animation: lf-shake 0.4s ease;
+}
+
+@keyframes lf-shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-5px); }
+  80%       { transform: translateX(5px); }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 480px) {
+  .lf-page  { padding: 1rem; }
+  .lf-card  { padding: 1.75rem 1.5rem; }
+  .lf-title { font-size: 20px; }
+
+  .lf-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

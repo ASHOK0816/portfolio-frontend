@@ -1,0 +1,40 @@
+.otp-boxes {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.otp-boxes input {
+  width: 48px;
+  height: 52px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.otp-boxes input:focus {
+  border-color: #ff6f00;
+  transform: scale(1.05);
+  box-shadow: 0 0 0 2px rgba(255, 111, 0, 0.2);
+}
+
+.otp-boxes input.error {
+  border-color: #e53935;
+}
+
+.otp-boxes.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}

@@ -1,0 +1,475 @@
+/* ============================================================
+   DASHBOARD — Production CSS
+   Dark-mode ready · Accessible · Mobile first · Performant
+   ============================================================ */
+
+/* ── 1. DESIGN TOKENS ──────────────────────────────────────── */
+:root {
+  --clr-primary:      #4f46e5;
+  --clr-primary-light:#6366f1;
+  --clr-accent:       #ec4899;
+  --clr-accent-light: #f472b6;
+
+  --clr-bg:           #f0f2ff;
+  --clr-glass:        rgba(255, 255, 255, 0.45);
+  --clr-glass-border: rgba(255, 255, 255, 0.55);
+  --clr-glass-hover:  rgba(255, 255, 255, 0.60);
+  --clr-shadow:       rgba(79, 70, 229, 0.12);
+  --clr-shadow-hover: rgba(79, 70, 229, 0.25);
+
+  --clr-text-primary:   #111827;
+  --clr-text-secondary: #374151;
+  --clr-text-muted:     #6b7280;
+  --clr-text-on-card:   #ffffff;
+
+  --clr-divider:      rgba(0, 0, 0, 0.06);
+  --clr-list-hover:   #4f46e5;
+
+  --radius-card:  20px;
+  --radius-sm:    12px;
+  --gap:          28px;
+
+  --dur-fast:   0.2s;
+  --dur-normal: 0.4s;
+  --dur-slow:   0.7s;
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-body: "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --blob1-color: #6366f1;
+  --blob2-color: #ec4899;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-bg:             #0f1021;
+    --clr-glass:          rgba(255, 255, 255, 0.06);
+    --clr-glass-border:   rgba(255, 255, 255, 0.10);
+    --clr-glass-hover:    rgba(255, 255, 255, 0.12);
+    --clr-shadow:         rgba(0, 0, 0, 0.35);
+    --clr-shadow-hover:   rgba(99, 102, 241, 0.30);
+    --clr-text-primary:   #f9fafb;
+    --clr-text-secondary: #d1d5db;
+    --clr-text-muted:     #9ca3af;
+    --clr-divider:        rgba(255, 255, 255, 0.07);
+    --clr-list-hover:     #818cf8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+  }
+}
+
+
+/* ── 2. ROOT LAYOUT ─────────────────────────────────────────── */
+.dashboard-root {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--clr-bg);
+  font-family: var(--font-body);
+  overflow: hidden;
+}
+
+.dashboard-root::before {
+  content: "";
+  position: fixed;
+  width: min(420px, 50vw);
+  height: min(420px, 50vw);
+  background: var(--blob1-color);
+  border-radius: 50%;
+  will-change: transform;
+  filter: blur(100px);
+  opacity: 0.18;
+  top: 5%;
+  left: 5%;
+  pointer-events: none;
+  animation: floatBlob 9s infinite alternate var(--ease-out);
+  z-index: 0;
+}
+
+.dashboard-root::after {
+  content: "";
+  position: fixed;
+  width: min(320px, 40vw);
+  height: min(320px, 40vw);
+  background: var(--blob2-color);
+  border-radius: 50%;
+  will-change: transform;
+  filter: blur(100px);
+  opacity: 0.18;
+  bottom: 5%;
+  right: 5%;
+  pointer-events: none;
+  animation: floatBlob 12s infinite alternate-reverse var(--ease-out);
+  z-index: 0;
+}
+
+@keyframes floatBlob {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, -30px) scale(1.08); }
+}
+
+
+/* ── 3. WRAPPER & CONTENT ───────────────────────────────────── */
+.dashboard-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.dashboard-content-area {
+  padding: 32px 36px;
+  animation: fadeUp var(--dur-slow) var(--ease-out) both;
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(28px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+
+/* ── 4. HEADING ─────────────────────────────────────────────── */
+.dashboard-heading {
+  text-align: center;
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 36px;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeDown 0.6s var(--ease-out) 0.1s both;
+}
+
+@keyframes fadeDown {
+  from { transform: translateY(-16px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+
+/* ── 5. STATS GRID ──────────────────────────────────────────── */
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+}
+
+
+/* ── 6. STAT CARD ───────────────────────────────────────────── */
+.dashboard-stat-card {
+  position: relative;
+  padding: 28px 24px;
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: var(--clr-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--clr-glass-border);
+  box-shadow: 0 4px 24px var(--clr-shadow);
+
+  transition:
+    transform  var(--dur-normal) var(--ease-out),
+    box-shadow var(--dur-normal) var(--ease-out),
+    background var(--dur-normal) ease;
+
+  opacity: 0;
+  animation: cardFadeUp var(--dur-slow) var(--ease-out) forwards;
+}
+
+.dashboard-stat-card:nth-child(1) { animation-delay: 0.10s; }
+.dashboard-stat-card:nth-child(2) { animation-delay: 0.20s; }
+.dashboard-stat-card:nth-child(3) { animation-delay: 0.30s; }
+.dashboard-stat-card:nth-child(4) { animation-delay: 0.40s; }
+
+@keyframes cardFadeUp {
+  from { transform: translateY(24px) scale(0.97); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+.dashboard-stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.20) 0%, transparent 55%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.dashboard-stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  background: var(--clr-glass-hover);
+  box-shadow:
+    0 16px 48px var(--clr-shadow-hover),
+    0 0 0 1.5px rgba(255, 255, 255, 0.45);
+}
+
+.dashboard-stat-card:active {
+  transform: translateY(-2px) scale(0.97);
+  transition-duration: 0.1s;
+}
+
+.dashboard-stat-card:focus-visible {
+  outline: 3px solid var(--clr-primary-light);
+  outline-offset: 3px;
+}
+
+
+/* ── 7. CARD INTERNALS ──────────────────────────────────────── */
+.stat-icon {
+  font-size: 32px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconPop 0.5s var(--ease-out) 0.3s both;
+}
+
+@keyframes iconPop {
+  0%   { transform: scale(0.4) rotate(-10deg); opacity: 0; }
+  70%  { transform: scale(1.15) rotate(3deg);  opacity: 1; }
+  100% { transform: scale(1)    rotate(0deg);  opacity: 1; }
+}
+
+.stat-title {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--clr-text-on-card);
+  opacity: 0.80;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: clamp(24px, 4vw, 34px);
+  text-align: center;
+  font-weight: 700;
+  color: var(--clr-text-on-card);
+  margin-top: 4px;
+  line-height: 1.1;
+}
+
+
+/* ── 8. CHART CARD ──────────────────────────────────────────── */
+.chart-card {
+  margin-bottom: var(--gap);
+  padding: 24px 28px;
+  border-radius: var(--radius-card);
+  background: var(--clr-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--clr-glass-border);
+  box-shadow: 0 4px 24px var(--clr-shadow);
+  animation: fadeUp var(--dur-slow) var(--ease-out) 0.5s both;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  margin-bottom: 20px;
+}
+
+
+/* ── 9. ACTIVITY CARD ───────────────────────────────────────── */
+.activity-card {
+  margin-bottom: var(--gap);
+  padding: 24px 28px;
+  border-radius: var(--radius-card);
+  background: var(--clr-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--clr-glass-border);
+  box-shadow: 0 4px 24px var(--clr-shadow);
+  animation: fadeUp var(--dur-slow) var(--ease-out) 0.65s both;
+}
+
+.activity-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  margin-bottom: 14px;
+}
+
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.activity-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--clr-divider);
+  font-size: 14px;
+  color: var(--clr-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideIn var(--dur-normal) var(--ease-out) forwards;
+  transition: color var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+
+.activity-list li:last-child { border-bottom: none; }
+
+.activity-list li:nth-child(1) { animation-delay: 0.70s; }
+.activity-list li:nth-child(2) { animation-delay: 0.80s; }
+.activity-list li:nth-child(3) { animation-delay: 0.90s; }
+.activity-list li:nth-child(4) { animation-delay: 1.00s; }
+
+.activity-list li:hover {
+  transform: translateX(6px);
+  color: var(--clr-list-hover);
+}
+
+@keyframes slideIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── TABLET (max 1024px) ────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .dashboard-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .dashboard-content-area {
+    padding: 28px 24px;
+  }
+}
+
+
+/* ── MOBILE (max 768px) ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .dashboard-content-area {
+    padding: 20px 16px;
+    animation-duration: 0.4s;
+  }
+
+  .dashboard-heading {
+    font-size: clamp(16px, 5vw, 22px);
+    margin-bottom: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  .dashboard-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-stat-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .stat-icon  { font-size: 26px; margin-bottom: 10px; }
+  .stat-title { font-size: 11px; letter-spacing: 0.07em; }
+  .stat-value { font-size: clamp(20px, 6vw, 28px); }
+
+  .chart-card,
+  .activity-card {
+    padding: 18px 16px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+
+  .chart-title,
+  .activity-title { font-size: 15px; }
+
+  .activity-list li {
+    font-size: 13px;
+    padding: 10px 0;
+    gap: 8px;
+  }
+
+  /* On touch devices hover lift sticks after tap — remove it */
+  .dashboard-stat-card:hover {
+    transform: none;
+    box-shadow: 0 4px 24px var(--clr-shadow);
+  }
+
+  /* Use active press instead */
+  .dashboard-stat-card:active {
+    transform: scale(0.96);
+    opacity: 0.90;
+    transition-duration: 0.1s;
+  }
+}
+
+
+/* ── SMALL MOBILE (max 480px) ───────────────────────────────── */
+@media (max-width: 480px) {
+  .dashboard-content-area {
+    padding: 14px 10px;
+  }
+
+  .dashboard-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .dashboard-stat-card {
+    padding: 18px 12px;
+    border-radius: 14px;
+  }
+
+  .stat-icon  { font-size: 22px; }
+  .stat-title { font-size: 10px; }
+  .stat-value { font-size: 22px; }
+
+  .chart-card,
+  .activity-card {
+    padding: 14px 12px;
+    border-radius: 14px;
+  }
+
+  /* Shrink blobs so they don't dominate small screens */
+  .dashboard-root::before {
+    width: 200px;
+    height: 200px;
+    filter: blur(60px);
+  }
+
+  .dashboard-root::after {
+    width: 160px;
+    height: 160px;
+    filter: blur(50px);
+  }
+}
+
+
+/* ── VERY SMALL (max 360px) ─────────────────────────────────── */
+@media (max-width: 360px) {
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .dashboard-stat-card { padding: 14px 10px; }
+  .stat-value          { font-size: 18px; }
+  .stat-title          { font-size: 9px; }
+}

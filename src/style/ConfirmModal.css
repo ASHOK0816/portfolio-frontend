@@ -1,0 +1,211 @@
+/* ============================================================
+   CONFIRM MODAL — THEME MATCHED
+   ============================================================ */
+
+/* ✅ THE ROOT FIX — position: fixed was missing entirely */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;                          /* above all cards, sidebars, topbars */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  animation: cf-fadeIn 0.2s ease forwards;
+}
+
+/* ================= MODAL CARD ================= */
+.confirm-card {
+  position: relative;
+  width: 360px;
+  max-width: 90vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+
+  padding: 32px 28px 24px;
+  border-radius: 16px;
+
+  background: var(--clr-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--clr-glass-border);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px rgba(255, 255, 255, 0.06);
+
+  animation: cf-scaleIn 0.25s var(--ease-out, ease-out) forwards;
+}
+
+/* ================= ICON CIRCLE ================= */
+.confirm-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.confirm-icon.danger {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  color: #ef4444;
+}
+
+.confirm-icon.warning {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  color: #f59e0b;
+}
+
+.confirm-icon.info {
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  color: #818cf8;
+}
+
+/* ✅ SVG inherits color from parent .confirm-icon */
+.confirm-svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ================= TEXT ================= */
+.confirm-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--clr-text-primary);
+  margin: 0;
+}
+
+.confirm-message {
+  font-size: 13px;
+  color: var(--clr-text-secondary);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 280px;
+}
+
+/* ================= ACTIONS ================= */
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn {
+  padding: 9px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Cancel */
+.btn-cancel {
+  background: transparent;
+  color: var(--clr-text-secondary);
+  border: 1px solid var(--clr-glass-border);
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Confirm — danger */
+.btn-confirm.danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+}
+
+.btn-confirm.danger:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* Confirm — warning */
+.btn-confirm.warning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+}
+
+.btn-confirm.warning:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* Confirm — info */
+.btn-confirm.info {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+}
+
+.btn-confirm.info:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* ================= LOADING SPINNER ================= */
+.btn-spinner {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  animation: cf-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* ================= ANIMATIONS — scoped to avoid conflicts ================= */
+@keyframes cf-fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cf-scaleIn {
+  from { transform: scale(0.91); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes cf-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================= REDUCED MOTION ================= */
+@media (prefers-reduced-motion: reduce) {
+  .confirm-overlay,
+  .confirm-card,
+  .btn-spinner {
+    animation: none;
+  }
+  .btn {
+    transition: none;
+  }
+}

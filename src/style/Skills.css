@@ -1,0 +1,332 @@
+/* ============================================================
+   SKILLS PAGE — THEME BASED (PRODUCTION READY)
+   ============================================================ */
+
+/* ================= CONTAINER ================= */
+.skills-page.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ================= HEADER ================= */
+.skills-header {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-6);
+  align-items: center;
+  width: 100%;
+}
+
+/* LEFT EMPTY SPACE */
+.skills-header-left {
+  justify-self: start;
+}
+
+.skills-title {
+  text-align: center;
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* RIGHT BUTTON */
+.skills-header-actions {
+  justify-self: end;
+}
+
+/* ================= FILTERS ================= */
+.skills-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--clr-border);
+  background: transparent;
+  color: var(--clr-text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  transition: all var(--motion-fast);
+}
+
+.filter-btn:hover {
+  background: var(--clr-bg-subtle);
+}
+
+.filter-btn.active {
+  background: var(--gradient-brand);
+  color: white;
+  border: none;
+}
+
+/* ================= GRID ================= */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-6);
+}
+
+/* ================= CARD ================= */
+.skills-card {
+  position: relative;
+
+  background: var(--clr-glass);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--clr-border);
+
+  backdrop-filter: blur(18px);
+
+  padding: var(--space-4);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+
+  box-shadow: var(--shadow-md);
+
+  transition: all var(--motion-base) var(--ease-smooth);
+}
+
+.skills-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 20px rgba(99, 102, 241, 0.2); /* subtle glow */
+}
+
+
+/* ================= CATEGORY BADGE ================= */
+.skill-category-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  font-size: 10px;
+  padding: 4px 8px;
+
+  border-radius: var(--radius-full);
+
+  background: rgba(255,255,255,0.08);
+  color: var(--clr-text-secondary);
+
+  border: 1px solid var(--clr-border);
+}
+
+
+/* ================= IMAGE ================= */
+.skills-card-image {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+
+  box-shadow: var(--shadow-sm);
+}
+
+/* ================= TITLE ================= */
+.skills-card-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--clr-text-primary);
+}
+
+/* ================= ACTION ICONS ================= */
+.skills-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  display: flex;
+  gap: 8px;
+
+  opacity: 0;
+  transform: translateY(-6px);
+
+  transition: all var(--motion-base) var(--ease-smooth);
+}
+
+.skills-card:hover .skills-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ICON BASE */
+.action-icon {
+  position: relative;
+  cursor: pointer;
+  color: var(--clr-text-muted);
+
+  transition: all var(--motion-fast) var(--ease-smooth);
+}
+
+/* EDIT */
+.edit-icon:hover {
+  color: var(--color-warning);
+  transform: scale(1.15);
+}
+
+/* DELETE */
+.delete-icon:hover {
+  color: var(--color-error);
+  transform: scale(1.15);
+}
+
+/* ================= REORDER ================= */
+.skills-reorder {
+  display: flex;
+  gap: 10px;
+  margin-top: var(--space-2);
+}
+
+.reorder-icon {
+  cursor: pointer;
+  color: var(--clr-text-muted);
+
+  transition: all var(--motion-fast) var(--ease-smooth);
+}
+
+.reorder-icon:hover {
+  color: var(--color-brand);
+  transform: scale(1.2);
+}
+
+/* ================= TOOLTIP (IMPROVED) ================= */
+.action-icon::after,
+.reorder-icon::after {
+  content: attr(data-tooltip);
+
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: var(--clr-bg-elevated);
+  color: var(--clr-text-primary);
+
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+
+  font-size: 11px;
+  white-space: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: all var(--motion-fast);
+}
+
+.action-icon:hover::after,
+.reorder-icon:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+/* ================= EMPTY STATE ================= */
+.skills-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--clr-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ================= MODAL ================= */
+.skills-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.skills-modal {
+  width: 420px;
+  max-width: 95%;
+
+  padding: var(--space-6);
+
+  border-radius: var(--radius-lg);
+
+  background: var(--clr-glass);
+  border: 1px solid var(--clr-border);
+
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-xl);
+}
+
+.skills-modal-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.skills-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+/* ================= SKELETON ================= */
+.skeleton-card {
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--clr-bg-subtle);
+}
+
+.skeleton-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: auto;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.08) 25%,
+    rgba(255,255,255,0.18) 50%,
+    rgba(255,255,255,0.08) 75%
+  );
+
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeleton-text {
+  width: 60%;
+  height: 12px;
+  margin: 10px auto 0;
+  border-radius: var(--radius-md);
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.08) 25%,
+    rgba(255,255,255,0.18) 50%,
+    rgba(255,255,255,0.08) 75%
+  );
+
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}

@@ -1,0 +1,431 @@
+/* ================= LAYOUT ================= */
+.profile-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--clr-bg);
+}
+
+.profile-main {
+  flex: 1;
+}
+
+.profile-container {
+  display: flex;
+  margin-top: var(--space-6);
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================= CARD ================= */
+.profile-card {
+  width: 100%;
+  max-width: 520px;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+/* GLASS */
+.glass {
+  background: var(--clr-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--clr-glass-border);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ================= TITLE ================= */
+.profile-title {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+}
+
+/* ================= PROGRESS RING ================= */
+.profile-photo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.profile-progress {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: auto;
+}
+
+/* ROTATION EFFECT */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+/* BACKGROUND */
+.ring-bg {
+  fill: none;
+  stroke: var(--clr-border);
+  stroke-width: 10;
+}
+
+/* PROGRESS */
+.ring-progress {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px var(--clr-primary-500));
+  transition: stroke-dashoffset 0.8s var(--ease-smooth);
+}
+
+/* CENTER PHOTO */
+.profile-photo-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.profile-photo-center {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-bg-subtle);
+}
+
+.profile-photo-center img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PERCENT TEXT */
+.progress-percent {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--text-sm);
+  color: var(--clr-text-muted);
+}
+
+/* TOOLTIP */
+.progress-tooltip {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  background: var(--clr-bg-elevated);
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.profile-progress:hover .progress-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* ================= BADGES ================= */
+.profile-badges {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+}
+
+/* LEVELS */
+.badge.bronze { background: #cd7f32; }
+.badge.silver { background: #bfc1c2; }
+.badge.gold { background: #d4af37; }
+.badge.platinum {
+  background: linear-gradient(135deg,#4f46e5,#a855f7);
+  box-shadow: 0 0 12px rgba(99,102,241,0.5);
+}
+
+.profile-progress.completed .ring-progress {
+  animation: pulseGlow 1.5s infinite;
+}
+
+@keyframes pulseGlow {
+  0% {
+    filter: drop-shadow(0 0 5px var(--clr-primary-500));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px var(--clr-accent-500));
+  }
+  100% {
+    filter: drop-shadow(0 0 5px var(--clr-primary-500));
+  }
+}
+
+/* ================= XP SYSTEM ================= */
+.xp-panel {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.xp-level {
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.xp-level.level-up {
+  animation: pop 0.6s ease;
+  color: var(--clr-primary-500);
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.xp-bar {
+  height: 8px;
+  background: var(--clr-bg-subtle);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.xp-fill {
+  height: 100%;
+  background: var(--gradient-brand);
+  transition: width 0.6s ease;
+}
+
+.xp-text {
+  font-size: 12px;
+  color: var(--clr-text-muted);
+}
+
+/* ================= PREMIUM CELEBRATION OVERLAY ================= */
+
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(10, 10, 25, 0.55);
+  backdrop-filter: blur(10px);
+
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+
+  z-index: 9999;
+
+  /* animation */
+  animation: celebrationIn 0.6s var(--ease-bounce) forwards,
+             celebrationOut 0.6s ease 2.5s forwards;
+}
+
+/* ENTRY */
+@keyframes celebrationIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+/* EXIT */
+@keyframes celebrationOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+.celebration-message {
+  color: var(--gradient-brand);
+  animation: pop 0.6s ease;
+}
+
+/* ================= PHOTO ================= */
+.profile-photo {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-photo img {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 3px solid var(--clr-primary-500);
+}
+
+.profile-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  background: var(--clr-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  color: var(--clr-text-muted);
+}
+
+/* ================= INPUT ================= */
+.profile-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-bg-elevated);
+  transition: var(--motion-fast);
+}
+
+.profile-field:focus-within {
+  border-color: var(--clr-primary-500);
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-field svg {
+  color: var(--clr-primary-500);
+}
+
+.profile-field input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--text-sm);
+  color: var(--clr-text-primary);
+}
+
+/* ================= BUTTON GROUP ================= */
+.profile-btn-group {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+/* ================= PHOTO ACTION ================= */
+.profile-photo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* ================= BUTTON EXTENSIONS ================= */
+.btn-danger {
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(239, 68, 68, 0.30);
+  background: rgba(239, 68, 68, 0.15);
+  /* ✅ FIX: was hardcoded #fff */
+  color: #ef4444;
+  cursor: pointer;
+  transition: 
+    background var(--motion-fast) var(--ease-smooth),
+    transform var(--motion-fast) var(--ease-smooth),
+    box-shadow var(--motion-fast) var(--ease-smooth);
+          
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: rgba(239, 68, 68, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(239, 68, 68, 0.20);
+}
+
+.btn-danger:active {
+  transform: scale(0.98);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: none;
+
+  font-size: var(--text-sm);
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform var(--motion-fast) var(--ease-smooth),
+    box-shadow var(--motion-fast) var(--ease-smooth),
+    filter var(--motion-fast) var(--ease-smooth);
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.25);
+  filter: brightness(1.05);
+}
+
+.btn-success:active {
+  transform: scale(0.98);
+}
+
+/* ================= ACCESSIBILITY FIX ================= */
+.btn-danger:focus-visible,
+.btn-success:focus-visible {
+  outline: 2px solid var(--clr-primary-500);
+  outline-offset: 2px;
+}
+
+/* ================= SKELETON ================= */
+.profile-skel-title {
+  height: 20px;
+  width: 60%;
+  margin: auto;
+}
+
+.profile-skel-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  margin: auto;
+}
+
+.profile-skel-input {
+  height: 40px;
+  border-radius: var(--radius-md);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .profile-card {
+    padding: var(--space-4);
+  }
+}

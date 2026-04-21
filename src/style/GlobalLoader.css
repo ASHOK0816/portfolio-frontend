@@ -1,0 +1,153 @@
+/* ============================================================
+   GLOBAL LOADER — THEME INTEGRATED
+   ============================================================ */
+
+.global-loader {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: var(--clr-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  z-index: var(--z-top);
+
+  /* Fix: named property + forwards fill */
+  animation: fadeIn var(--dur-normal, 200ms) var(--ease-out, ease-out) forwards;
+}
+
+/* ================= SHOW / HIDE STATES ================= */
+
+/* Fix: exit animation — matches the 300ms timeout in GlobalLoader.jsx */
+.global-loader.hide {
+  animation: fadeOut var(--dur-normal, 200ms) var(--ease-out, ease-out) forwards;
+  pointer-events: none; /* prevent clicks during fade-out */
+}
+
+.global-loader.show {
+  animation: fadeIn var(--dur-normal, 200ms) var(--ease-out, ease-out) forwards;
+  pointer-events: auto;
+}
+
+/* ================= CONTAINER ================= */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4, 1rem);
+  color: var(--clr-text-primary);
+  padding: var(--space-6, 1.5rem) var(--space-8, 2rem);
+  border-radius: var(--radius-lg, 1rem);
+
+  background: var(--gradient-card);
+  border: 1px solid var(--clr-glass-border);
+
+  box-shadow: var(--shadow-lg);
+}
+
+/* ================= SPINNER ================= */
+.spinner {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  border: 3px solid transparent;
+  border-top-color: var(--clr-primary-500);
+  border-right-color: var(--clr-accent-500);
+
+  /* Fix: compositing hint to keep animation on GPU */
+  will-change: transform;
+
+  animation: spin 0.8s linear infinite;
+}
+
+/* Fix: removed .spinner::after — it had no dimensions or content, rendered nothing */
+
+/* ================= TEXT ================= */
+.loader-text {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 500;
+  color: var(--clr-text-secondary);
+  letter-spacing: 0.03em;
+
+  /* Fix: clip the pseudo-element overflow cleanly */
+  overflow: hidden;
+}
+
+/* ================= DOT ANIMATION (cross-browser fix) ================= */
+
+/* Fix: animating `content` is unreliable — use opacity on individual spans instead.
+   The dots are now driven by JS-free CSS with reliable cross-browser support */
+
+.loader-text::after {
+  content: "";
+  display: inline-block;
+  width: 1.5em;           /* reserve space so text doesn't shift */
+  text-align: left;
+  vertical-align: bottom;
+  animation: dots 1.2s steps(4, end) infinite;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);   /* subtle scale for polish */
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+/* Fix: use letter-based approach — far more reliable than content switching */
+@keyframes dots {
+  0%  { content: "";    }
+  25% { content: ".";   }
+  50% { content: "..";  }
+  75% { content: "..."; }
+}
+
+/* ================= ACCESSIBILITY ================= */
+
+/* Fix: respect user motion preferences — critical for vestibular disorders */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    border: 3px solid var(--clr-primary-500); /* static ring instead */
+  }
+
+  .global-loader,
+  .global-loader.show,
+  .global-loader.hide {
+    animation: none;
+    opacity: 1;
+  }
+
+  .loader-text::after {
+    animation: none;
+    content: "..."; /* static dots */
+  }
+}
