@@ -196,6 +196,7 @@
 .dashboard-stat-card:nth-child(2) { animation-delay: 0.20s; }
 .dashboard-stat-card:nth-child(3) { animation-delay: 0.30s; }
 .dashboard-stat-card:nth-child(4) { animation-delay: 0.40s; }
+.dashboard-stat-card:nth-child(5) { animation-delay: 0.50s; }
 
 @keyframes cardFadeUp {
   from { transform: translateY(24px) scale(0.97); opacity: 0; }
@@ -344,6 +345,92 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
+/* ── 11. EXPERIENCE TIMELINE ───────────────────────────────── */
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  position: relative;
+  padding-left: 4px;
+}
+
+.timeline-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 18px;
+  width: 2px;
+  height: calc(100% - 10px);
+  background: var(--clr-divider);
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px var(--clr-primary);
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+}
+
+.timeline-company {
+  font-size: 13px;
+  color: var(--clr-text-secondary);
+}
+
+.timeline-date {
+  font-size: 12px;
+  color: var(--clr-text-muted);
+}
+
+.timeline-desc {
+  font-size: 13px;
+  margin-top: 4px;
+  color: var(--clr-text-secondary);
+}
+
+
+.dashboard-tabs {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dashboard-tabs button {
+  border-radius: var(--radius-full);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-bg-elevated);
+  padding: var(--space-2) var(--space-6);
+  cursor: pointer;
+  transition: all var(--motion-base);
+}
+
+.dashboard-tabs button.active {
+  background: var(--gradient-brand);
+  color: white;
+  border: none;
+}
+
+.dashboard-tabs button:hover {
+  transform: translateY(-2px);
+}
+
+/* ── 13. EMPTY STATE ───────────────────────────────────────── */
+.empty-text {
+  font-size: 13px;
+  color: var(--clr-text-muted);
+}
 
 /* ══════════════════════════════════════════════════════════════
    RESPONSIVE

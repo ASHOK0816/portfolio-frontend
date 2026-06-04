@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { toast } from "react-toastify";
 import "../style/Topbar.css";
-import { connectSocket } from "../api/socket";
+import { connectSocket, disconnectSocket } from "../api/socket";
 
 export default function Topbar() {
   const [profile, setProfile] = useState(null);
@@ -39,7 +39,7 @@ export default function Topbar() {
       const unread = res.data.filter((m) => !m.read).length;
       setUnreadCount(unread);
     } catch (err) {
-      console.error(err);
+      console.error("fetchUnread failed",err);
     }
   }, []);
 
@@ -54,21 +54,30 @@ export default function Topbar() {
 
   /* ================= SOCKET ================= */
 
-  useEffect(() => {
-    loadProfile();
-    fetchUnread();
-  }, [loadProfile, fetchUnread]);
+  const didRun = useRef(false);
+
+useEffect(() => {
+  if (didRun.current) return;
+  didRun.current = true;
+
+  loadProfile();
+  fetchUnread();
+}, []);
+
+const socketInit = useRef(false);
 
   useEffect(() => {
-    connectSocket((newMessage) => {
-      setUnreadCount((prev) => prev + 1);
+  connectSocket((newMessage) => {
+    setUnreadCount(prev => prev + 1);
+    toast.info("📩 New message received!");
+    setShake(true);
+    setTimeout(() => setShake(false), 600);
+  });
 
-      toast.info("📩 New message received!");
-
-      setShake(true);
-      setTimeout(() => setShake(false), 600);
-    });
-  }, []);
+  return () => {
+    disconnectSocket(); // ✅ correct cleanup
+  };
+}, []);
 
   const goToMessages = () => navigate("/messages");
 
@@ -146,6 +155,7 @@ export default function Topbar() {
                 profile?.photoUrl
                   ? `http://localhost:8080${profile.photoUrl}`
                   : "https://i.pravatar.cc/40"
+
               }
               className="admin-avatar"
               alt="admin"

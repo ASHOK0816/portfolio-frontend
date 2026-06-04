@@ -10,11 +10,12 @@
   background: var(--clr-bg);
 }
 
-.main-content{
-flex:1;
-display:flex;
-flex-direction:column;
-height: 100vh;
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* ================= EMAIL LAYOUT ================= */
@@ -37,8 +38,6 @@ height: 100vh;
   animation: fadeIn var(--motion-base) var(--ease-smooth);
 }
 
-/* ================= MESSAGE LIST ================= */
-
 /* ================= EMAIL LIST ================= */
 
 .email-list {
@@ -60,7 +59,8 @@ height: 100vh;
   border-radius: 10px;
 }
 
-/* ================= Filter ================= */
+/* ================= FILTER ================= */
+
 .filter-bar {
   display: flex;
   gap: var(--space-2);
@@ -68,15 +68,24 @@ height: 100vh;
 }
 
 .filter-select {
+  flex: 1;
   padding: 6px 10px;
   border-radius: var(--radius-md);
   border: 1px solid var(--clr-border);
   background: var(--clr-bg-elevated);
   color: var(--clr-text-primary);
+  font-size: 13px;
   cursor: pointer;
+  outline: none;
+  transition: border-color var(--motion-base);
+}
+
+.filter-select:focus {
+  border-color: var(--clr-primary-500);
 }
 
 /* ================= SEARCH ================= */
+
 .search-wrapper {
   position: relative;
   margin: 12px;
@@ -88,16 +97,19 @@ height: 100vh;
   border-radius: 10px;
   border: 1px solid var(--clr-border);
   background: var(--clr-bg-elevated);
+  color: var(--clr-text-primary);
   font-size: 14px;
   outline: none;
   transition: all var(--motion-base) var(--ease-smooth);
 }
 
 .search-input:focus {
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+  border-color: var(--clr-primary-500);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
-/* ================= FLOATING TEXT ================= */
+/* ================= FLOATING LABEL ================= */
+
 .search-placeholder {
   position: absolute;
   left: 14px;
@@ -112,25 +124,34 @@ height: 100vh;
 /* Float up when typing */
 .premium-search:focus + .search-placeholder,
 .premium-search:not(:placeholder-shown) + .search-placeholder {
-  top: -5px;
-  font-size: 12px;
+  top: -8px;
+  font-size: 11px;
   color: var(--clr-primary-500);
   background: var(--clr-bg-elevated);
   padding: 0 6px;
+  border-radius: 4px;
 }
 
-/* ================= ANIMATED TEXT ================= */
+/* ================= ANIMATED PLACEHOLDER TEXT ================= */
+
 .search-placeholder::after {
   content: "Search messages...";
   animation: typing 8s infinite;
 }
 
+/* Hide animated text when input has content or is focused */
+.premium-search:focus + .search-placeholder::after,
+.premium-search:not(:placeholder-shown) + .search-placeholder::after {
+  content: "" !important;
+  animation: none;
+}
+
 @keyframes typing {
-  0%   { content: "Search messages..."; }
-  25%  { content: "Search by name..."; }
-  50%  { content: "Search by email..."; }
-  75%  { content: "Search conversations..."; }
-  100% { content: "Search messages..."; }
+  0%,  20% { content: "Search messages..."; }
+  25%, 45% { content: "Search by name..."; }
+  50%, 70% { content: "Search by email..."; }
+  75%, 95% { content: "Search conversations..."; }
+  100%      { content: "Search messages..."; }
 }
 
 /* ================= DATE HEADER ================= */
@@ -138,7 +159,8 @@ height: 100vh;
 .date-header {
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 
   padding: var(--space-2) var(--space-4);
 
@@ -159,25 +181,26 @@ height: 100vh;
 
   cursor: pointer;
   border-bottom: 1px solid var(--clr-border);
+  border-left: 3px solid transparent; /* reserve space so layout doesn't shift */
 
   transition: all var(--motion-base) var(--ease-smooth);
 }
 
 .email-item:hover {
   background: var(--clr-bg-subtle);
-  transform: translateX(4px);
+  transform: translateX(2px);
 }
 
 .email-item.active {
-  background: rgba(99,102,241,0.12);
-  border-left: 4px solid var(--clr-primary-500);
+  background: rgba(99, 102, 241, 0.12);
+  border-left: 3px solid var(--clr-primary-500);
 }
 
 /* ================= UNREAD ================= */
 
 .email-item.unread {
   font-weight: 600;
-  background: rgba(99,102,241,0.08);
+  background: rgba(99, 102, 241, 0.06);
   border-left: 3px solid var(--color-brand);
 }
 
@@ -187,11 +210,12 @@ height: 100vh;
   color: var(--clr-text-muted);
 }
 
-/* ================= ICON ================= */
+/* ================= AVATAR ================= */
 
 .avatar {
   width: 36px;
   height: 36px;
+  flex-shrink: 0;
 
   border-radius: 50%;
 
@@ -214,12 +238,14 @@ height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 3px;
+  min-width: 0; /* prevent overflow */
 }
 
 .email-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--space-2);
 }
 
 /* ================= SENDER ================= */
@@ -227,11 +253,17 @@ height: 100vh;
 .sender {
   font-size: 14px;
   color: var(--clr-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
 }
 
 .time {
   font-size: 11px;
   color: var(--clr-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .preview {
@@ -242,35 +274,34 @@ height: 100vh;
   text-overflow: ellipsis;
 }
 
-/* ================= QUEUE BADGE ================= */
+/* ================= SEARCH HIGHLIGHT ================= */
 
-.queue {
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: var(--radius-full);
-
-  background: rgba(99,102,241,0.1);
-  color: var(--color-brand);
+.highlight {
+  background: rgba(99, 102, 241, 0.2);
+  color: var(--clr-primary-500);
+  border-radius: 2px;
+  padding: 0 2px;
 }
 
-/* ================= STATUS ================= */
+/* ================= STATUS BADGES ================= */
 
 .status {
   font-size: 10px;
-  padding: 2px 6px;
+  font-weight: 500;
+  padding: 2px 7px;
   border-radius: var(--radius-full);
+  flex-shrink: 0;
 }
 
 .status.unread {
-  background: rgba(245,158,11,0.1);
+  background: rgba(245, 158, 11, 0.12);
   color: var(--color-warning);
 }
 
 .status.read {
-  font-style: italic;
-  background: rgba(34,197,94,0.1);
+  background: rgba(34, 197, 94, 0.12);
   color: var(--color-success);
-  border-color: var(--color-success);
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 /* ================= STAR ================= */
@@ -279,24 +310,30 @@ height: 100vh;
   font-size: 16px;
   color: var(--clr-text-muted);
   cursor: pointer;
-  transition: var(--motion-fast);
+  transition: color var(--motion-fast), transform var(--motion-fast);
+  flex-shrink: 0;
 }
 
 .star:hover,
 .star.active {
   color: #f4b400;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
+
+/* ================= DELETE ================= */
 
 .delete {
   font-size: 16px;
   color: var(--color-error);
   cursor: pointer;
-  transition: var(--motion-fast);
+  transition: transform var(--motion-fast), opacity var(--motion-fast);
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 .delete:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  opacity: 1;
 }
 
 /* ================= PAGINATION ================= */
@@ -305,6 +342,8 @@ height: 100vh;
   margin-top: auto;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   gap: var(--space-2);
 
   padding: var(--space-4);
@@ -320,7 +359,8 @@ height: 100vh;
   color: var(--clr-text-primary);
 
   cursor: pointer;
-  transition: var(--motion-fast);
+  font-size: 13px;
+  transition: background var(--motion-fast), color var(--motion-fast);
 }
 
 .pagination button:hover {
@@ -330,6 +370,7 @@ height: 100vh;
 .pagination button.active {
   background: var(--gradient-brand);
   color: white;
+  border-color: transparent;
 }
 
 /* ================= MESSAGE VIEW ================= */
@@ -337,9 +378,11 @@ height: 100vh;
 .email-view {
   flex: 1;
   padding: var(--space-6);
+  min-width: 0;
 
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 
   background: transparent;
   animation: fadeIn var(--motion-base);
@@ -351,26 +394,35 @@ height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 100%;
   color: var(--clr-text-muted);
+  font-size: 15px;
 }
 
-/* CONTENT */
+/* MESSAGE CONTENT */
 
 .message-view h2 {
   font-size: 22px;
-  margin-bottom: 6px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--clr-text-primary);
 }
 
 .message-view .email {
   font-size: 14px;
   color: var(--clr-text-muted);
+  margin-bottom: 4px;
 }
 
 .message-view .date {
   font-size: 12px;
   color: var(--clr-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.message-view hr {
+  border: none;
+  border-top: 1px solid var(--clr-border);
   margin-bottom: var(--space-4);
 }
 
@@ -382,26 +434,26 @@ height: 100vh;
 
 /* ================= ANIMATIONS ================= */
 
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes slideUp{
-from{
-opacity:0;
-transform:translateY(8px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ================= RESPONSIVE ================= */
@@ -409,6 +461,8 @@ transform:translateY(0);
 @media (max-width: 900px) {
   .email-layout {
     flex-direction: column;
+    margin: var(--space-3);
+    height: calc(100vh - 60px);
   }
 
   .email-list {

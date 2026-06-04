@@ -16,6 +16,8 @@ import "./style/theme.css";
 
 /* 🔐 Protected Route */
 import { useLocation } from "react-router-dom";
+import Experience from "./pages/Experience.jsx";
+import ResumeUpload from "./pages/ResumeUpload.jsx";
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
@@ -89,6 +91,24 @@ function App() {
           element={
             <PrivateRoute>
               <Skills />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/Experience"
+          element={
+            <PrivateRoute>
+              <Experience />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/resumeUpload"
+          element={
+            <PrivateRoute>
+              <ResumeUpload />
             </PrivateRoute>
           }
         />

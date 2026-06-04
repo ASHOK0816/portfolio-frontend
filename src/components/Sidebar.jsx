@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaTachometerAlt, FaProjectDiagram, FaGraduationCap, FaTools, FaUser, FaEnvelope, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
+import { FaTachometerAlt, FaLaptopCode, FaGraduationCap, FaBriefcase, FaTools, FaUser, FaEnvelope, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "../style/Sidebar.css";
 import { useState } from "react";
@@ -54,7 +54,7 @@ export default function Sidebar() {
         </NavLink>
 
         <NavLink className="sidebar-link" to="/projects">
-          <FaProjectDiagram className="sidebar-icon" />
+          <FaLaptopCode className="sidebar-icon" />
           {!collapsed && <span>Projects</span>}
         </NavLink>
 
@@ -63,9 +63,19 @@ export default function Sidebar() {
           {!collapsed && <span>Education</span>}
         </NavLink>
 
+        <NavLink className="sidebar-link" to="/experience">   
+          <FaBriefcase className="sidebar-icon" />
+          {!collapsed && <span>Experience</span>}
+        </NavLink>  
+
         <NavLink className="sidebar-link" to="/skills">
           <FaTools className="sidebar-icon" />
           {!collapsed && <span>Skills</span>}
+        </NavLink>
+
+        <NavLink className="sidebar-link" to="/resumeUpload">
+          <FaEnvelope className="sidebar-icon" />
+          {!collapsed && <span>Resume</span>}
         </NavLink>
 
         <NavLink className="sidebar-link" to="/messages">

@@ -75,10 +75,12 @@ export default function Skills() {
   };
 
   // Update skill image
-  const handleUpdateImage = async (id, file) => {
+  const handleUpdateImage = async (id, file, category) => {
     try {
       const data = new FormData();
+
       data.append("image", file);
+      data.append("category", category);
 
       await api.put(`/skills/${id}/image`, data, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -227,7 +229,7 @@ export default function Skills() {
                         type="file"
                         hidden
                         onChange={(e) =>
-                          handleUpdateImage(skill.id, e.target.files[0])
+                          handleUpdateImage(skill.id, e.target.files[0], skill.category)
                         }
                       />
                     </label>

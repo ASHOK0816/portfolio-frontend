@@ -187,8 +187,7 @@ export default function Login() {
       setLoading(true);
 
       const res = await api.post("/auth/login", {
-        username: loginMode === "username" ? identifier : null,
-        email: loginMode === "email" ? identifier : null,
+        login: identifier,
         password,
       });
 

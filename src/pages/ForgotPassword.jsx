@@ -89,8 +89,8 @@ function StepDots({ current }) {
 }
 
 const TITLES = {
-  1: ["Forgot password", "Enter your admin username to continue"],
-  2: ["Verify OTP", "Enter the 6-digit code sent to your account"],
+  1: ["Forgot password", "Enter your admin Email to continue"],
+  2: ["Verify OTP", "Enter the 6-digit code sent to your Email"],
   3: ["New password", "Choose a strong password to secure your account"],
 };
 
@@ -157,7 +157,7 @@ export default function ForgotPassword() {
     try {
       setLoading(true);
 
-      await api.post("/auth/send-otp", { email });
+      await api.post("/auth/admin/send-otp", { email });
 
       toast.success("OTP sent successfully");
       setStep(2);
@@ -225,7 +225,7 @@ export default function ForgotPassword() {
         {step === 1 && (
           <div className="step-content">
             <div className="field-wrap">
-              <label className="field-label">EMail</label>
+              <label className="field-label">Email</label>
               <input
                 className="fp-input"
                 placeholder="admin@email.com"
